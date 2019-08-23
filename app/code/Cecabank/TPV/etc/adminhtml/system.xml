@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="cecabank" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Tarjeta (Cecabank)</label>
+				<comment><![CDATA[<img src="https://www.cecabank.es/wp-content/uploads/2018/09/logo-cecabank.png" height="32" width="201"/>]]></comment>
+           	
+           		<field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Activar Cecabank TPV</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<config_path>payment/cecabank/enabled</config_path>
+				</field>
+				
+                <field id="sandbox" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>En Prueba</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<config_path>payment/cecabank/sandbox</config_path>
+                </field>
+                
+                <field id="merchant" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Código de comercio</label>
+					<config_path>payment/cecabank/merchant</config_path>
+                </field>
+                
+                <field id="acquirer" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Adquiriente</label>
+					<config_path>payment/cecabank/acquirer</config_path>
+                </field>
+                
+                <field id="terminal" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                   <label>Terminal</label>
+					<config_path>payment/cecabank/terminal</config_path>
+                </field>
+                
+                <field id="secretkey" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+                   <label>Clave Secreta</label>
+					<config_path>payment/cecabank/secretkey</config_path>
+                </field>
+                
+                <field id="currency" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Moneda</label>
+					<source_model>Cecabank\TPV\Model\Config\Source\Currencyoptions</source_model>
+					<config_path>payment/cecabank/currency</config_path>
+                </field>
+                
+                <field id="status" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="0">
+                   	<label>Estado tras confirmar el pago</label>
+					<source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
+					<config_path>payment/cecabank/status</config_path>
+                </field>
+            </group>
+            <!-- payment-group -->
+        </section>
+    </system>
+</config>

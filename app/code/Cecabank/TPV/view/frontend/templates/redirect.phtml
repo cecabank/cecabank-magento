@@ -1,0 +1,28 @@
+<!--
+
+-->
+
+<?php 
+	if($this->getTry() < 10){
+
+		echo __("Esta siendo redirigido a Cecabank para realizar el pago.")."<br/>";
+		echo __("Si su navegador no le redirecciona automáticamente pulse")." <a href='javascript:void(0)' onclick='submitForm();'>".__("aquí")."</a> ".__(".");
+?>
+<script>document.getElementById("cecabank-form").submit();</script>
+
+<form id="cecabank-form" action="<?php echo $this->getCecabankClient()->getPath(); ?>" method="post">
+    <?php echo $this->getCecabankClient()->getFormHiddens(); ?>
+</form>
+
+<script type="text/javascript">
+	function submitForm() {
+		document.getElementById("cecabank-form").submit();
+	}
+	submitForm();
+</script>
+<?php 
+	}
+	else{
+		echo __("Parece que hay un problema, inténtelo más tarde.");
+	}
+?>

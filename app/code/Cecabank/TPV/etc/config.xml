@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+              <cecabank>
+                <active>1</active>
+                <title>Tarjeta (Cecabank)</title>
+                <order_status>processing</order_status>
+                <estado>processing</estado>
+                <payment_action>true</payment_action>
+                <model>Cecabank\TPV\Model\CecabankModel</model>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_refund>1</can_refund>
+  	</cecabank>
+        </payment>
+    </default>
+</config>
