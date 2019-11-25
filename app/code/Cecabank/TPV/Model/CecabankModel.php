@@ -65,7 +65,7 @@ class CecabankModel extends \Magento\Payment\Model\Method\AbstractMethod
     	return __(parent::getTitle());
     }
 
-    public function refund($payment, $amount) {
+    public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount) {
         $order = $payment->getOrder();
 	    $transactionId = explode("-", $payment->getTransactionId())[0];
         if (!$transactionId) {
