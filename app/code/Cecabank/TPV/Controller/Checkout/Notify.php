@@ -12,14 +12,13 @@ use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
 use Magento\Sales\Model\Service\InvoiceService;
 use Magento\Sales\Model\Order\Payment\Transaction;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 
 use Cecabank\TPV\Controller\CecabankController;
 use Cecabank\TPV\lib\CecabankClient;
 
-class Notify extends \Magento\Framework\App\Action\Action implements CsrfAwareActionInterface
+class Notify extends \Magento\Framework\App\Action\Action
 {
     protected $_resultPageFactory;
     protected $_cecabankController;
