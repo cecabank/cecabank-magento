@@ -263,7 +263,7 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 			'Descripcion' => 'Pago del pedido '.$order_id,
 			'Importe' => $amount,
 			'URL_OK' => $url,
-			'URL_NOK' => $url.'?cancel=1',
+			'URL_NOK' => $this->get_baseURL(),
 			'datos_acs_20' => urlencode( json_encode( $acs ) )
 		));
 	}
