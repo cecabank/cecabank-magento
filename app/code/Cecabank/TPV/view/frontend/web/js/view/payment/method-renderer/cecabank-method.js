@@ -24,6 +24,7 @@ function (
     url) {
         'use strict';
 
+        var cecabankConfigProvider = window.checkoutConfig.payment.cecabank;
         return Component.extend({
             defaults: {
                 template: 'Cecabank_TPV/payment/cecabank'
@@ -64,6 +65,14 @@ function (
             /** Returns send check to info */
             getMailingAddress: function() {
                 return window.checkoutConfig.payment.checkmo.mailingAddress;
+            },
+
+            getDescription: function () {
+                return cecabankConfigProvider.description;
+            },
+
+            getImage: function () {
+                return cecabankConfigProvider.image;
             }
 
 

@@ -41,6 +41,16 @@
 					<config_path>payment/cecabank/secretkey</config_path>
                 </field>
                 
+                <field id="titlepay" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+                   <label>Título</label>
+					<config_path>payment/cecabank/titlepay</config_path>
+                </field>
+                
+                <field id="description" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+                   <label>Descripción</label>
+					<config_path>payment/cecabank/description</config_path>
+                </field>
+                
                 <field id="currency" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Moneda</label>
 					<source_model>Cecabank\TPV\Model\Config\Source\Currencyoptions</source_model>

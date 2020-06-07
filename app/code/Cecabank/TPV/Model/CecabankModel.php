@@ -62,7 +62,15 @@ class CecabankModel extends \Magento\Payment\Model\Method\AbstractMethod
 	}
 
     function getTitle(){
-    	return __(parent::getTitle());
+    	return $this->getConfigData('titlepay');
+    }
+
+    function getDescription(){
+    	return $this->getConfigData('description');
+    }
+
+    function getImage(){
+    	return "https://pgw.ceca.es/TPVvirtual/images/logo".$this->getConfigData('acquirer').".gif";
     }
 
     public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount) {

@@ -10,6 +10,11 @@
         <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
     </div>
     <div class="payment-method-content">
+        <div style="text-align: center">
+            <img data-bind="attr: {src: getImage()}"/>
+            <br>
+            <p data-bind="text: getDescription()"></p>
+        </div>
         <!-- ko foreach: getRegion('messages') -->
         <!-- ko template: getTemplate() --><!-- /ko -->
         <!--/ko-->
