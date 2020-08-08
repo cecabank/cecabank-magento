@@ -27,20 +27,21 @@ class Redirect extends \Magento\Framework\App\Action\Action
     
     public function execute()
     {
-    	$order = $this->_session->getLastRealOrder();
-    	$order_id = $order->getId();
-    	$not_processing=(!$this->_session->getData("Cecabank".$order_id) || $this->_session->getData("Cecabank".$order_id) < 10);     	
+		$quote = $this->_session->getQuote();
+		$quote_id = $quote->getId(); 		
+		
+    	$not_processing=(!$this->_session->getData("Cecabank".$quote_id) || $this->_session->getData("Cecabank".$quote_id) < 10);     	
     	
-    	if($order_id && $not_processing){ 
-			$order_items = $order->getAllItems();
-			$amount = floatval($order->getTotalDue());
+    	if($quote_id && $not_processing){ 
+			$quote_items = $quote->getAllItems();
+			$amount = floatval($quote->getGrandTotal());
 			$client = array(
-				"name" => $order->getCustomerFirstname()." ".$order->getCustomerLastname(),
-				"email" => $order->getCustomerEmail()
+				"name" => $quote->getCustomerFirstname()." ".$quote->getCustomerLastname(),
+				"email" => $quote->getCustomerEmail()
 			);
 			$products = "";
 			
-	    	foreach($order_items as $item){
+			foreach($quote_items as $item){
 	    		if($item->getQtyOrdered()%1!=0)
 	    			$count = $item->getQtyOrdered();
 	    		else
@@ -49,7 +50,7 @@ class Redirect extends \Magento\Framework\App\Action\Action
 				$products .= $item->getName()."x".$count." / ";
 	    	}
 
-	    	$try = $this->_session->getData("Cecabank".$order_id);
+	    	$try = $this->_session->getData("Cecabank".$quote_id);
 	    	
 	    	if($try == null) {
 				$try = 0;
@@ -57,14 +58,7 @@ class Redirect extends \Magento\Framework\App\Action\Action
 
     		$try++;    		
     			
-	    	$this->_session->setData("Cecabank".$order_id, $try);
-    		
-    		if($try == 1){
-    			$order->setState('new')->setStatus('pending_payment')->save();
-    			$order->addStatusHistoryComment(__("Cecabank, redireccionado al pago."), false)
-	    			->setIsCustomerNotified(false)
-	    			->save();
-    		}
+	    	$this->_session->setData("Cecabank".$quote_id, $try);
 
     		$resultPage = $this->_resultPageFactory->create();
     		$resultPage->getConfig()->getTitle()->prepend(__("Redireccionando..."));
@@ -72,9 +66,9 @@ class Redirect extends \Magento\Framework\App\Action\Action
     		$resultPage->getLayout()->getBlock('cecabank_checkout_redirect')->setTry($try);
     		
     		if($try < 10){    			    	
-    			$order_id = str_pad($order_id.$try, 12, "0", STR_PAD_LEFT);
+    			$quote_id = str_pad($quote_id.$try, 12, "0", STR_PAD_LEFT);
 					    	
-		    	$cecabank_client = $this->_cecabankController->generateFields($order_id, $order, $products, $amount);
+				$cecabank_client = $this->_cecabankController->generateFields($quote_id, $quote, $products, $amount);
 	    		$resultPage->getLayout()->getBlock('cecabank_checkout_redirect')->setCecabankClient($cecabank_client);
     		}
     		

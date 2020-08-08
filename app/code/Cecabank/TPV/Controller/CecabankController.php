@@ -130,10 +130,10 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 		);
 	}
 
-	function process_regular_payment($cecabank_client, $order_id, $order, $products, $amount, $url) {
+	function process_regular_payment($cecabank_client, $quote_id, $quote, $products, $amount, $url) {
 		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		$user = $objectManager->create('\Magento\Customer\Model\Customer')->load($order->getCustomerId());
-		$user_id = $order->getCustomerId();
+		$user = $objectManager->create('\Magento\Customer\Model\Customer')->load($quote->getCustomerId());
+		$user_id = $quote->getCustomerId();
 		$user_age = 'NO_ACCOUNT';
 		$user_info_age = '';
 		$registered = '';
@@ -141,10 +141,10 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 		$txn_activity_year = '';
 		$txn_purchase_6 = '';
 		$ship_name_indicator = 'DIFFERENT';
-		$billing_address = $order->getBillingAddress();
+		$billing_address = $quote->getBillingAddress();
 		$name = $billing_address->getFirstname().' '.$billing_address->getLastname();
-		$email = $order->getCustomerEmail();
-		$ip = $order->getRemoteIp();
+		$email = $quote->getCustomerEmail();
+		$ip = $quote->getRemoteIp();
 		$city = $billing_address->getCity();
 		$country = $billing_address->getCountryId();
 		$line1 = $billing_address->getStreet();
@@ -153,7 +153,7 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 		$postal_code = $billing_address->getPostcode();
 		$state = $billing_address->getRegion();
 		$phone = $billing_address->getTelephone();
-		$shipping_address = $order->getShippingAddress();
+		$shipping_address = $quote->getShippingAddress();
 		$ship_name = $shipping_address->getFirstname().' '.$shipping_address->getLastname();
 		$ship_city = $shipping_address->getCity();
 		$ship_country = $shipping_address->getCountryId();
@@ -259,8 +259,8 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 		
 		// Create transaction
 		$cecabank_client->setFormHiddens(array(
-			'Num_operacion' => $order->getId(),
-			'Descripcion' => 'Pago del pedido '.$order_id,
+			'Num_operacion' => $quote->getId(),
+			'Descripcion' => 'Pago del pedido '.$quote_id,
 			'Importe' => $amount,
 			'URL_OK' => $url,
 			'URL_NOK' => $this->get_baseURL(),
@@ -268,14 +268,14 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 		));
 	}
 	
-	public function generateFields($order_id, $order, $products, $amount){
+	public function generateFields($quote_id, $quote, $products, $amount){
 		$url = $this->_baseURL."index.php/checkout/onepage/success/";
 
 		$config = $this-> get_client_config();
 
 		$cecabank_client = new CecabankClient($config);
 
-		$this->process_regular_payment( $cecabank_client, strval($order_id), $order, $products, $amount, $url );
+		$this->process_regular_payment( $cecabank_client, strval($quote_id), $quote, $products, $amount, $url );
 		
 		return $cecabank_client;
 	}
