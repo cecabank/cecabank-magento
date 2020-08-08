@@ -15,6 +15,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
+use Magento\Quote\Api\CartManagementInterface;
 
 use Cecabank\TPV\Controller\CecabankController;
 use Cecabank\TPV\lib\CecabankClient;
@@ -28,9 +29,10 @@ class Notify extends \Magento\Framework\App\Action\Action implements CsrfAwareAc
     protected $_invoiceSender;
     protected $_cart;
     protected $_formKey;
-    protected $_productRepository;
+	protected $_productRepository;
+	protected $_quoteManagement;
 
-    public function __construct(Context $context, Session $session, PageFactory $resultPageFactory, StoreManagerInterface $storeManager, CecabankController $cecabankController, InvoiceService $invoiceService, InvoiceSender $invoiceSender, Cart $cart, ProductRepository $productRepository, FormKey $formKey)
+    public function __construct(Context $context, Session $session, PageFactory $resultPageFactory, StoreManagerInterface $storeManager, CecabankController $cecabankController, InvoiceService $invoiceService, InvoiceSender $invoiceSender, Cart $cart, ProductRepository $productRepository, FormKey $formKey, CartManagementInterface $quoteManagement)
     {
     	$this->_session = $session;
     	$this->_invoiceSender = $invoiceSender;
@@ -39,7 +41,8 @@ class Notify extends \Magento\Framework\App\Action\Action implements CsrfAwareAc
     	$this->_resultPageFactory = $resultPageFactory;
     	$this->_cart = $cart;
     	$this->_formKey = $formKey;
-    	$this->_productRepository = $productRepository;
+		$this->_productRepository = $productRepository;
+		$this->_quoteManagement = $quoteManagement;
     	parent::__construct($context);
     }
     
@@ -101,7 +104,9 @@ class Notify extends \Magento\Framework\App\Action\Action implements CsrfAwareAc
 		}
 
 		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-		$order = $objectManager->create('\Magento\Sales\Model\Order')->load($data['Num_operacion']);
+		$quote = $objectManager->create('\Magento\Quote\Model\Quote')->load($data['Num_operacion']);
+		$order = $this->_quoteManagement->submit($quote);
+		$this->_session->setLastOrderId($order->getId())->setLastRealOrderId($order->getIncrementId());
 		return array(0, $order, $cecabank_client->successCode());
     }
 
