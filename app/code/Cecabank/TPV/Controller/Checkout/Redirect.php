@@ -30,8 +30,14 @@ class Redirect extends \Magento\Framework\App\Action\Action
 		$quote = $this->_session->getQuote();
 		$quote_id = $quote->getId(); 		
 		
-    	$not_processing=(!$this->_session->getData("Cecabank".$quote_id) || $this->_session->getData("Cecabank".$quote_id) < 10);     	
-    	
+		$not_processing=(!$this->_session->getData("Cecabank".$quote_id) || $this->_session->getData("Cecabank".$quote_id) < 10);
+
+		if (!$quote->getCustomerId()) {
+			$quote->setCustomerIsGuest(1);
+			$quote->setCustomerEmail($quote->getBillingAddress()->getEmail());
+			$quote->save();
+		}  	
+		
     	if($quote_id && $not_processing){ 
 			$quote_items = $quote->getAllItems();
 			$amount = floatval($quote->getGrandTotal());
