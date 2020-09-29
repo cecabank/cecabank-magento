@@ -62,6 +62,11 @@
 					<source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>
 					<config_path>payment/cecabank/status</config_path>
                 </field>
+                
+                <field id="icon" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Ícono</label>
+					<config_path>payment/cecabank/icon</config_path>
+                </field>
             </group>
             <!-- payment-group -->
         </section>

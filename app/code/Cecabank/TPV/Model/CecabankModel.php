@@ -70,7 +70,12 @@ class CecabankModel extends \Magento\Payment\Model\Method\AbstractMethod
     }
 
     function getImage(){
-    	return "https://pgw.ceca.es/TPVvirtual/images/logo".$this->getConfigData('acquirer').".gif";
+        $acquirer = $this->getConfigData('acquirer');
+        $icon = $this->getConfigData('icon');
+        if ($acquirer && $acquirer !== '0000554000' && $icon === "https://pgw.ceca.es/TPVvirtual/images/logo0000554000.gif") {
+            $icon = "https://pgw.ceca.es/TPVvirtual/images/logo".$acquirer.".gif";
+        }
+    	return $icon;
     }
 
     public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount) {

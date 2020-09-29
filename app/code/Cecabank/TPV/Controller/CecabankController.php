@@ -15,6 +15,7 @@ class CecabankController extends \Magento\Framework\App\Action\Action
     protected $_terminal;
     protected $_secretkey;
     protected $_currency;
+    protected $_icon;
     protected $_status;
    
 
@@ -29,6 +30,7 @@ class CecabankController extends \Magento\Framework\App\Action\Action
     	$this->_secretkey = $model->getConfigData('secretkey');
     	$this->_currency = $model->getConfigData('currency');
     	$this->_status = $model->getConfigData('status');
+    	$this->_icon = $model->getConfigData('icon');
     }
 
 	/**
@@ -85,6 +87,14 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 	 */
 	public function get_currency(){
 		return $this->_currency;
+	}
+
+	/**
+	 * _icon
+	 * @return unkown
+	 */
+	public function get_icon(){
+		return $this->_icon;
 	}
 
 	/**
