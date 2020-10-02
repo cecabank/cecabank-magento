@@ -279,7 +279,7 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 	}
 	
 	public function generateFields($quote_id, $quote, $products, $amount){
-		$url = $this->_baseURL."index.php/checkout/onepage/success/";
+		$url = $this->_baseURL."cecabank/checkout/success/";
 
 		$config = $this-> get_client_config();
 
