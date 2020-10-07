@@ -27,9 +27,13 @@ class Success extends \Magento\Framework\App\Action\Action
     
     public function execute()
     {
-		$quote = $this->_session->getQuote();		
-		$quote->setIsActive(0)->save();
-		// $this->_session->clear();
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+		$quote = $objectManager->create('\Magento\Quote\Model\Quote')->load($_GET['Num_operacion']);
+		$order = $objectManager->create('\Magento\Sales\Model\Order')->load($quote->getReservedOrderId(), 'increment_id');
+		$this->_session->setLastSuccessQuoteId($quote->getId());
+		$this->_session->setLastQuoteId($quote->getId());
+		$this->_session->setLastOrderId($order->getId());
+		$this->_session->setLastRealOrderId($order->getIncrementId());
 		$this->_redirect("checkout/onepage/success/");
     }
     
