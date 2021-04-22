@@ -57,7 +57,8 @@ class CecabankModel extends \Magento\Payment\Model\Method\AbstractMethod
 			'Exponente' => '2',
 			'Cifrado' => 'SHA2',
 			'Idioma' => '1',
-			'Pago_soportado' => 'SSL'
+			'Pago_soportado' => 'SSL',
+            'versionMod' => 'M-1.0.2'
 		);
 	}
 

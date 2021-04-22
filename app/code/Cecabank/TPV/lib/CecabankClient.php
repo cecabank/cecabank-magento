@@ -13,11 +13,12 @@ class CecabankClient
         'Exponente' => '2',
         'Cifrado' => 'SHA1',
         'Idioma' => '1',
-        'Pago_soportado' => 'SSL'
+        'Pago_soportado' => 'SSL',
+        'versionMod' => ''
     );
 
     private $o_required = array('Environment', 'ClaveCifrado', 'MerchantID', 'AcquirerBIN', 'TerminalID', 'TipoMoneda', 'Exponente', 'Cifrado', 'Pago_soportado');
-    private $o_optional = array('Idioma', 'Descripcion', 'URL_OK', 'URL_NOK', 'Tipo_operacion', 'Datos_operaciones', 'PAN', 'Caducidad', 'CVV2', 'Pago_elegido');
+    private $o_optional = array('Idioma', 'Descripcion', 'URL_OK', 'URL_NOK', 'Tipo_operacion', 'Datos_operaciones', 'PAN', 'Caducidad', 'CVV2', 'Pago_elegido', 'versionMod');
 
     private $environment = '';
     private $environments = array(
@@ -132,6 +133,7 @@ class CecabankClient
         $this->setValueDefault($options, 'Exponente');
         $this->setValueDefault($options, 'Cifrado');
         $this->setValueDefault($options, 'Pago_soportado');
+        $this->setValueDefault($options, 'versionMod');
         $this->setValueDefault($options, 'Idioma');
 
         $this->setValue($options, 'Num_operacion');
@@ -152,7 +154,7 @@ class CecabankClient
         $this->setValueLength('TerminalID', 8);
 
         $options['Firma'] = $this->getSignature();
-        $options['firma_acs_20'] = $this->makeHash($options['datos_acs_20'], false);
+        $options['firma_acs_20'] = $this->makeHash($options[''], false);
 
         $this->setValue($options, 'Firma');
         $this->setValue($options, 'firma_acs_20');

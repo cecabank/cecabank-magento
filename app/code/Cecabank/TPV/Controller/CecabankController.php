@@ -136,7 +136,8 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 			'Exponente' => '2',
 			'Cifrado' => 'SHA2',
 			'Idioma' => '1',
-			'Pago_soportado' => 'SSL'
+			'Pago_soportado' => 'SSL',
+            'versionMod' => 'M-1.0.2'
 		);
 	}
 
@@ -354,7 +355,7 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 			'Importe' => $amount,
 			'URL_OK' => $url.'?Num_operacion='.$quote->getId(),
 			'URL_NOK' => $this->get_baseURL(),
-			'datos_acs_20' => urlencode( json_encode( $acs ) )
+			'datos_acs_20' => base64_encode( str_replace( '[]', '{}', json_encode( $acs ) ) )
 		));
 	}
 	
