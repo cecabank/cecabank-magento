@@ -51,12 +51,6 @@
 					<config_path>payment/cecabank/description</config_path>
                 </field>
                 
-                <field id="currency" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Moneda</label>
-					<source_model>Cecabank\TPV\Model\Config\Source\Currencyoptions</source_model>
-					<config_path>payment/cecabank/currency</config_path>
-                </field>
-                
                 <field id="status" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="0">
                    	<label>Estado tras confirmar el pago</label>
 					<source_model>Magento\Sales\Model\Config\Source\Order\Status</source_model>

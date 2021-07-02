@@ -53,7 +53,6 @@ class CecabankModel extends \Magento\Payment\Model\Method\AbstractMethod
 			'AcquirerBIN' => $this->getConfigData('acquirer'),
 			'TerminalID' => $this->getConfigData('terminal'),
 			'ClaveCifrado' => $this->getConfigData('secretkey'),
-			'TipoMoneda' => $this->getConfigData('currency'),
 			'Exponente' => '2',
 			'Cifrado' => 'SHA2',
 			'Idioma' => '1',
@@ -87,15 +86,15 @@ class CecabankModel extends \Magento\Payment\Model\Method\AbstractMethod
 			$order->save();
         }
         try {
+            $config = $this->getClientConfig();
+            $cecabank_client = new CecabankClient($config);
             $refund_data = array(
                 'Num_operacion' => $order->getId(),
                 'Referencia' => $transactionId,
 		        'Importe' => $amount,
-		        'TIPO_ANU' => 'P'
+		        'TIPO_ANU' => 'P',
+                'TipoMoneda' => $cecabank_client->getCurrencyCode($order->getOrderCurrencyCode())
             );
-
-            $config = $this->getClientConfig();
-            $cecabank_client = new CecabankClient($config);
 	        $cecabank_client->refund($refund_data);
             return $this;
         } catch ( Exception $e ) {

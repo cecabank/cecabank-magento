@@ -14,7 +14,6 @@ class CecabankController extends \Magento\Framework\App\Action\Action
     protected $_acquirer;
     protected $_terminal;
     protected $_secretkey;
-    protected $_currency;
     protected $_icon;
     protected $_status;
    
@@ -28,7 +27,6 @@ class CecabankController extends \Magento\Framework\App\Action\Action
     	$this->_acquirer = $model->getConfigData('acquirer');
     	$this->_terminal = $model->getConfigData('terminal');
     	$this->_secretkey = $model->getConfigData('secretkey');
-    	$this->_currency = $model->getConfigData('currency');
     	$this->_status = $model->getConfigData('status');
     	$this->_icon = $model->getConfigData('icon');
     }
@@ -82,14 +80,6 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 	}
 
 	/**
-	 * _currency
-	 * @return unkown
-	 */
-	public function get_currency(){
-		return $this->_currency;
-	}
-
-	/**
 	 * _icon
 	 * @return unkown
 	 */
@@ -132,7 +122,6 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 			'AcquirerBIN' => $this->get_acquirer(),
 			'TerminalID' => $this->get_terminal(),
 			'ClaveCifrado' => $this->get_secretkey(),
-			'TipoMoneda' => $this->get_currency(),
 			'Exponente' => '2',
 			'Cifrado' => 'SHA2',
 			'Idioma' => '1',
@@ -355,6 +344,7 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 			'Importe' => $amount,
 			'URL_OK' => $url.'?Num_operacion='.$quote->getId(),
 			'URL_NOK' => $this->get_baseURL(),
+			'TipoMoneda' => $cecabank_client->getCurrencyCode($quote->getQuoteCurrencyCode()),
 			'datos_acs_20' => base64_encode( str_replace( '[]', '{}', json_encode( $acs ) ) )
 		));
 	}
