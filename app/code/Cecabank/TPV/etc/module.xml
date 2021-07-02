@@ -3,6 +3,6 @@
 
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Module/etc/module.xsd">
-  <module name="Cecabank_TPV" setup_version="1.0.2">
+  <module name="Cecabank_TPV" setup_version="1.0.3">
   </module>
 </config>

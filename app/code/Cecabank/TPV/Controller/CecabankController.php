@@ -126,7 +126,7 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 			'Cifrado' => 'SHA2',
 			'Idioma' => '1',
 			'Pago_soportado' => 'SSL',
-            'versionMod' => 'M-1.0.2'
+            'versionMod' => 'M-1.0.3'
 		);
 	}
 
