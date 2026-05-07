@@ -116,17 +116,19 @@ class CecabankController extends \Magento\Framework\App\Action\Action
 		if ($this->get_sandbox() != '1') {
 			$environment = 'real';
 		}
+		$secretKey = $this->get_secretkey();
+		$cifrado = strlen((string) $secretKey) === 8 ? 'SHA2' : 'HMAC';
 		return array(
 			'Environment' => $environment,
 			'MerchantID' => $this->get_merchant(),
 			'AcquirerBIN' => $this->get_acquirer(),
 			'TerminalID' => $this->get_terminal(),
-			'ClaveCifrado' => $this->get_secretkey(),
+			'ClaveCifrado' => $secretKey,
 			'Exponente' => '2',
-			'Cifrado' => 'SHA2',
+			'Cifrado' => $cifrado,
 			'Idioma' => '1',
 			'Pago_soportado' => 'SSL',
-            'versionMod' => 'M-1.0.3'
+            'versionMod' => 'M-1.0.4'
 		);
 	}
 

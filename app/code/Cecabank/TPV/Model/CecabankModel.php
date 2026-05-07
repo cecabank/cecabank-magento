@@ -47,17 +47,19 @@ class CecabankModel extends \Magento\Payment\Model\Method\AbstractMethod
 		if ($this->getConfigData('sandbox') != '1') {
 			$environment = 'real';
 		}
+		$secretKey = $this->getConfigData('secretkey');
+		$cifrado = strlen((string) $secretKey) === 8 ? 'SHA2' : 'HMAC';
 		return array(
 			'Environment' => $environment,
 			'MerchantID' => $this->getConfigData('merchant'),
 			'AcquirerBIN' => $this->getConfigData('acquirer'),
 			'TerminalID' => $this->getConfigData('terminal'),
-			'ClaveCifrado' => $this->getConfigData('secretkey'),
+			'ClaveCifrado' => $secretKey,
 			'Exponente' => '2',
-			'Cifrado' => 'SHA2',
+			'Cifrado' => $cifrado,
 			'Idioma' => '1',
 			'Pago_soportado' => 'SSL',
-            'versionMod' => 'M-1.0.3'
+            'versionMod' => 'M-1.0.4'
 		);
 	}
 
