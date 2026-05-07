@@ -105,6 +105,21 @@ class Notify extends \Magento\Framework\App\Action\Action implements CsrfAwareAc
 
 		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 		$quote = $objectManager->create('\Magento\Quote\Model\Quote')->load($data['Num_operacion']);
+
+		if (!$quote->getId()) {
+			return array(1, null, 'Pedido no encontrado');
+		}
+
+		$expectedImporte = $cecabank_client->getAmount($quote->getGrandTotal());
+		if ((string) $data['Importe'] !== (string) $expectedImporte) {
+			return array(1, null, 'El importe pagado no coincide con el total del pedido');
+		}
+
+		$expectedCurrency = $cecabank_client->getCurrencyCode($quote->getQuoteCurrencyCode());
+		if ((string) $data['TipoMoneda'] !== (string) $expectedCurrency) {
+			return array(1, null, 'La moneda no coincide con la del pedido');
+		}
+
 		$order = $this->_quoteManagement->submit($quote);
 		$this->_session->setLastOrderId($order->getId())->setLastRealOrderId($order->getIncrementId());
 		return array(0, $order, $cecabank_client->successCode());

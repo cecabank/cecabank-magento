@@ -36,7 +36,7 @@
 					<config_path>payment/cecabank/terminal</config_path>
                 </field>
                 
-                <field id="secretkey" translate="label comment" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="secretkey" translate="label comment" type="obscure" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
                    <label>Clave Secreta</label>
                    <comment>Clave secreta dada por Cecabank. Si tiene 8 caracteres se usará el algoritmo SHA2; en otro caso (clave HMAC, normalmente 32 caracteres) se usará HMAC.</comment>
 					<config_path>payment/cecabank/secretkey</config_path>

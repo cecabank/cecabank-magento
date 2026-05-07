@@ -11,7 +11,7 @@ class CecabankClient
         'TerminalID' => '1',
         'TipoMoneda' => '978',
         'Exponente' => '2',
-        'Cifrado' => 'SHA1',
+        'Cifrado' => 'SHA2',
         'Idioma' => '1',
         'Pago_soportado' => 'SSL',
         'versionMod' => ''
@@ -393,16 +393,15 @@ class CecabankClient
             return $this->makeHmacSha256Hash($message, $replace, $num_operacion);
         }
 
-        $message = $this->options['ClaveCifrado'].$message;
-
         if ($this->options['Cifrado'] === 'SHA2') {
-            if ( $replace ) {
+            $message = $this->options['ClaveCifrado'].$message;
+            if ($replace) {
                 $message = str_replace('&amp;', '&', $message);
             }
             return hash('sha256', $message);
         }
 
-        return sha1($message);
+        throw new Exception(sprintf('Unsupported Cifrado algorithm: %s', $this->options['Cifrado']));
     }
 
     private function makeHmacSha256Hash($message, $replace, $num_operacion)
