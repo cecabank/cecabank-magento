@@ -96,6 +96,7 @@ class Notify extends \Magento\Framework\App\Action\Action implements CsrfAwareAc
     
     private function validateOrder($data){
 		$config = $this->_cecabankController->get_client_config();
+		$config['Cifrado'] = 'SHA2';
 		$cecabank_client = new CecabankClient($config);
 		try {
 			$cecabank_client->checkTransaction($data);
