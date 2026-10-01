@@ -8,6 +8,11 @@
             <group id="cecabank" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
 				<label>Tarjeta (Cecabank)</label>
 				<comment><![CDATA[<img src="https://www.cecabank.es/wp-content/uploads/2018/09/logo-cecabank.png" height="32" width="201"/>]]></comment>
+
+                <field id="legacy_secret_key_notice" translate="label" type="label" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Aviso de seguridad</label>
+                    <frontend_model>Cecabank\TPV\Block\Adminhtml\System\Config\LegacySecretKeyNotice</frontend_model>
+                </field>
            	
            		<field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
 					<label>Activar Cecabank TPV</label>

@@ -48,7 +48,7 @@ class CecabankModel extends \Magento\Payment\Model\Method\AbstractMethod
 			$environment = 'real';
 		}
 		$secretKey = $this->getConfigData('secretkey');
-		$cifrado = strlen((string) $secretKey) === 8 ? 'SHA2' : 'HMAC';
+		$cifrado = strlen((string) $secretKey) === LegacySecretKey::LEGACY_KEY_LENGTH ? 'SHA2' : 'HMAC';
 		return array(
 			'Environment' => $environment,
 			'MerchantID' => $this->getConfigData('merchant'),
@@ -59,7 +59,7 @@ class CecabankModel extends \Magento\Payment\Model\Method\AbstractMethod
 			'Cifrado' => $cifrado,
 			'Idioma' => '1',
 			'Pago_soportado' => 'SSL',
-            'versionMod' => 'M-1.0.5'
+            'versionMod' => 'M-1.0.6'
 		);
 	}
 
